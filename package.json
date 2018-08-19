@@ -1,0 +1,27 @@
+{
+  "name": "triplefex",
+  "version": "0.0.1",
+  "description": "Converts excel document to triples based upon filters.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kurtcagle/triplefex.git"
+  },
+  "keywords": [
+    "excel",
+    "RDF",
+    "triples"
+  ],
+  "author": "kurt.cagle@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kurtcagle/triplefex/issues"
+  },
+  "homepage": "https://github.com/kurtcagle/triplefex#readme",
+  "dependencies": {
+    "xlsx": "^0.13.4"
+  }
+}

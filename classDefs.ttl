@@ -1,0 +1,204 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix bsh: <http://uim.boeing.com/bsh#>.
+@prefix graph: <http://uim.boeing.com/graph/>.
+@prefix shape: <http://uim.boeing.com/shape/>.
+@prefix term: <http://uim.boeing.com/term/>.
+@prefix vocab: <http://uim.boeing.com/vocab/>.
+@prefix entity: <http://uim.boeing.com/entity/>.
+@prefix org: <http://uim.boeing.com/org/>.
+@prefix location: <http://uim.boeing.com/location/>.
+@prefix region: <http://uim.boeing.com/region/>.
+@prefix person: <http://uim.boeing.com/person/>.
+@prefix product: <http://uim.boeing.com/product/>.
+@prefix event: <http://uim.boeing.com/event/>.
+@prefix customer: <http://uim.boeing.com/customer/>.
+@prefix transaction: <http://uim.boeing.com/product/>.
+@prefix news: <http://uim.boeing.com/news/>.
+
+entity:
+  a owl:Class;
+  .
+
+entity:hasDisplayName
+	a owl:AnnotationProperty ;
+	rdfs:subPropertyOf skos:prefLabel;
+	rdfs:subPropertyOf rdfs:label;
+	.
+
+entity:hasDisplayLangName
+	a owl:AnnotationProperty ;
+	rdfs:subPropertyOf skos:altLabel;
+	rdfs:subPropertyOf rdfs:label;
+	.
+
+entity:hasDescription
+	a owl:AnnotationProperty ;
+	rdfs:subPropertyOf skos:description;
+	rdfs:subPropertyOf rdfs:comment;
+	.
+
+entity:hasBody
+	a owl:AnnotationProperty ;
+	.
+
+entity:hasIdentifier
+	a owl:AnnotationProperty ;
+	.
+
+entity:hasMetric
+	a owl:DataProperty ;
+	.
+
+entity:hasTerm
+	a owl:ObjectProperty ;
+	.
+
+entity:hasConstraint
+	a owl:ObjectProperty ;
+	.
+
+shape:_Entity
+  a sh:nodeShape ;
+  sh:targetClass entity: ;
+  sh:name "entity";
+  sh:description "The core domain class within the EPIC model. Entity is abstract." ;
+  bsh:isAbstract "true"^^xsd:boolean ;
+  sh:prefix "entity";
+  sh:namespace "http://uim.boeing.com/entity/";
+
+  sh:property [
+  	sh:targetProperty entity:hasDisplayName ;
+  	sh:description """This is the primary name used for the entity in question
+within user interfaces and other displays. It is given in English.""" ;
+  	rdfs:seeAlso entity:hasDisplayLangName ;
+  	sh:name "display property" ;
+  	sh:minCount 1;
+  	sh:maxCount 1;
+  	sh:languageIn "en";
+  	] ;	
+
+  sh:property [
+  	sh:targetProperty entity:hasDescription ;
+  	sh:description """The provides a rich text HTML description of the resource, used primarily for interface displays.
+Unlike terms, this is not considered to be a canonical definition. Typically descriptions are abstracts rather than
+extensive bodies of text, and should be treated as HTML Literals.""" ;
+  	rdfs:seeAlso entity:hasBody ;
+  	sh:name "description" ;
+  	sh:minCount 0;
+  	];
+
+  sh:property [
+  	sh:targetProperty entity:hasBody ;
+  	sh:description """This is an extended encyclopedia-like description """ ;
+  	rdfs:seeAlso entity:hasBody ;
+  	sh:name "body" ;
+  	sh:minCount 0;
+  	];
+
+  sh:property [
+  	sh:targetProperty entity:hasIdentifier ;
+  	sh:description """This contains an identifier string associated with the entity, typically with the datatype indicating the authority of the identifier.
+An entity may have multiple identifiers regardless of authority.""" ;
+  	rdfs:seeAlso entity:hasIdentifier ;
+  	sh:name "identifier" ;
+  	sh:minCount 0;
+  	];
+
+  sh:property [
+  	sh:targetProperty entity:hasMetric ;
+  	sh:description """This indicates a numeric or string value with an associated dimension given as a datatype, usually intended as a measurement, cost or count. 
+It will typically be inherited.""" ;
+  	sh:name "metric" ;
+  	sh:minCount 0;
+  	bsh:isAbstract "true"^^xsd:boolean;
+  	];
+
+  sh:property [
+  	sh:targetProperty entity:hasConstraint ;
+  	sh:description """This is a pointer to another entity, intended to create an association. Typically these will be used primarily by objects
+acting as third normal form constructs, such as contracts or events.""" ;
+  	sh:name "constraint" ;
+  	sh:minCount 0;
+  	bsh:isAbstract "true"^^xsd:boolean;
+  	];
+
+  sh:property [
+  	sh:targetProperty entity:hasComposition ;
+  	sh:description """This is a pointer to another entity, intended to create a composition. Compositions typically indicate that the resulting
+ structures are to be retrieved as part of a SPARQL construct, such as address blocks or communication modes.""" ;
+  	sh:name "composition" ;
+  	sh:minCount 0;
+  	bsh:isAbstract "true"^^xsd:boolean;
+  	];
+
+
+  sh:property [
+  	sh:targetProperty entity:hasTerm ;
+  	sh:description """This is a pointer to a categorical term or type, used to clarify the characteristics of the resource. """ ;
+  	sh:name "term" ;
+  	sh:minCount 0;
+  	bsh:isAbstract "true"^^xsd:boolean;
+  	];
+
+  .
+
+
+org:
+   a owl:Class;
+   rdfs:subClassOf entity: ;
+   .
+
+location:
+   a owl:Class;
+   rdfs:subClassOf entity: ;
+   .
+
+region:
+ 	a owl:Class;
+ 	rdfs:subClassOf location: ;
+ 	.
+
+person:
+   a owl:Class;
+   rdfs:subClassOf entity: ;
+   .
+
+term:
+   a owl:Class;
+   rdfs:subClassOf skos:concept;
+   .
+
+vocab:
+   a owl:Class;
+   rdfs:subClassOf skos:scheme;
+   .
+
+product:
+	a owl:Class;
+    rdfs:subClassOf entity: ;
+	.
+
+event:
+	a owl:Class;
+    rdfs:subClassOf entity: ;
+	.
+
+customer:
+   a owl:Class;
+   rdfs:subClassOf org: ;
+   .
+
+transaction:
+ 	a owl:Class;
+ 	rdfs:subClassOf event: ;
+ 	.
+
+news:
+ 	a owl:Class;
+ 	rdfs:subClassOf event: ;
+ 	.
